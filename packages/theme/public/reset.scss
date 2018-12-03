@@ -1,0 +1,75 @@
+@charset 'utf-8';
+
+// 重置样式
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+address,
+em,
+img,
+strong,
+sub,
+sup,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+table,
+tbody,
+thead,
+tr,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  position: relative;
+  -webkit-text-size-adjust: 100%;//防止文字自动调整大小
+  font-family: -apple-system-font, "Helvetica Neue", sans-serif;
+  font-size: 100%;
+  -webkit-overflow-scrolling:touch;//解决ios默认滑动卡顿情况
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #333;
+}
+
+// 全局隐藏滚动条
+#app::-webkit-scrollbar {
+  display: none;
+}
