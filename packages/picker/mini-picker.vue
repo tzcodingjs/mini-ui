@@ -1,6 +1,6 @@
 <template>
   <div class="mini-picker">
-    <div class="mini-picker-input" @click.stop="HandleTogglePicker">
+    <div class="mini-picker-input" @click.stop="HandleTogglePicker" :style="fontColor">
       <span>{{ initNum }}</span>
     </div>
     <div class="mini-picker-bg" v-show="show" @click.stop="hidePicker"></div>
@@ -19,8 +19,14 @@
         @touchend="onTouchEnd"
         @touchcancel="onTouchEnd"
       >
+        <div class="selectBox"></div>
         <ul :style="animate">
-          <li v-for="(item,index) in num" :key="index">{{ item }}</li>
+          <li
+            v-for="(item,index) in num"
+            :key="index"
+            :style="height"
+            :class="{selected:index === currentIndex}"
+          >{{ item }}</li>
         </ul>
       </div>
     </div>
@@ -31,10 +37,6 @@
 export default {
   name: "MiniPicker",
   props: {
-    initNum: {
-      type: Number,
-      default: 1
-    },
     num: {
       type: Array,
       default: () => {
@@ -45,28 +47,45 @@ export default {
       type: Number,
       default: 200
     },
-    itemHeight:{
-      type:Number,
-      default:76
+    defaultIndex: {
+      type: Number,
+      default: 0
+    },
+    Color: {
+      type: String,
+      default: "#333"
     }
   },
   data() {
     return {
       show: false,
       startY: 0,
+      step:0,
       stepY: 0,
       baseY: 0,
-      selectItem: ""
+      initNum: 1,
+      itemHeight: 76,
+      currentIndex: this.defaultIndex
     };
   },
-  mounted(){
-    this.baseY = this.itemHeight
-  },
   computed: {
+    count() {
+      return this.num.length;
+    },
+    fontColor() {
+      return {
+        color: `${this.Color}`
+      };
+    },
     animate() {
       return {
         transition: `${this.duration}ms`,
-        transform: `translate3d(0, ${this.baseY + this.stepY}px,0)`
+        transform: `translate3d(0, ${this.baseY + this.stepY}px, 0)`
+      };
+    },
+    height() {
+      return {
+        height: `${this.itemHeight}px`
       };
     }
   },
@@ -75,19 +94,27 @@ export default {
       this.startY = e.touches[0].clientY;
     },
     onTouchMove(e) {
-      this.stepY = e.touches[0].clientY - this.startY;
+      this.step = e.touches[0].clientY - this.startY;
+      this.step = Math.round(this.step / this.itemHeight) * this.itemHeight;
+      this.stepY = this.step;
     },
     onTouchEnd(e) {
-      if (this.base == (this.baseY += this.stepY)) {
-        return false
+      if (this.baseY == (this.baseY += this.stepY)) {
+        return false;
       }
+      if (this.baseY > 0) {
+        this.baseY = 0;
+      }else if(this.baseY < (this.count - 1) * -this.itemHeight){
+        this.baseY = (this.count - 1) * -this.itemHeight;
+      }
+      this.currentIndex = Math.abs(this.baseY / this.itemHeight);
       this.stepY = 0;
     },
     HandleTogglePicker() {
       this.show = true;
     },
-    hidePicker(){
-      this.show = false
+    hidePicker() {
+      this.show = false;
     },
     cancel() {
       this.show = false;
@@ -95,7 +122,8 @@ export default {
     },
     confirm() {
       this.show = false;
-      this.$emit("confirm", this.selectItem);
+      this.initNum = this.num[this.currentIndex];
+      this.$emit("confirm", this.num[this.currentIndex]);
     }
   }
 };
@@ -142,14 +170,28 @@ export default {
       }
     }
     .mini-picker-item {
+      position: relative;
       text-align: center;
-      color: #808080;
+      color: #a8a8a8;
       overflow: hidden;
+      transform: translate(0, 76px);
+      .selectBox {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        margin-left: -30px;
+        width: 60px;
+        height: 56px;
+        border-top: 2px solid #1aad19;
+        border-bottom: 2px solid #1aad19;
+      }
       li {
         @include flex;
         justify-content: center;
         box-sizing: border-box;
-        height:76px;
+        &.selected {
+          color: #000;
+        }
       }
     }
   }
