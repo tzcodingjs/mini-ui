@@ -1,7 +1,7 @@
 <template>
   <div class="mini-picker">
     <div class="mini-picker-input" @click.stop="HandleTogglePicker" :style="fontColor">
-      <span>{{ initNum }}</span>
+      <span>{{ initText }}</span>
     </div>
     <div class="mini-picker-bg" v-show="show" @click.stop="hidePicker"></div>
     <div class="mini-picker-con" v-show="show">
@@ -35,18 +35,18 @@
 </template>
 
 <script>
-import { isObj } from '../utils/index.js'
+import { isObj } from "../utils/index.js";
 export default {
   name: "MiniPicker",
   props: {
-    valueKey:{
-      type:String,
-      default:'name'
+    valueKey: {
+      type: String,
+      default: "name"
     },
     listItem: {
       type: Array,
       default: () => {
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        return [];
       }
     },
     duration: {
@@ -69,7 +69,7 @@ export default {
       step: 0,
       stepY: 0,
       baseY: 0,
-      initNum: 1,
+      initText: null,
       itemHeight: 76,
       currentIndex: this.defaultIndex
     };
@@ -117,8 +117,11 @@ export default {
       this.currentIndex = Math.abs(this.baseY / this.itemHeight);
       this.stepY = 0;
     },
-    getText(item){
-      return isObj(item) && this.valueKey in item?item[this.valueKey]:item;
+    getText(item) {
+      return isObj(item) && this.valueKey in item ? item[this.valueKey] : item;
+    },
+    clearData(){
+      this.initText = null;
     },
     HandleTogglePicker() {
       this.show = true;
@@ -132,11 +135,11 @@ export default {
     },
     confirm() {
       this.show = false;
-      this.initNum = isObj(this.listItem[this.currentIndex])
-      ? this.listItem[this.currentIndex][this.valueKey]
-      : this.listItem[this.currentIndex];
+      this.initText = isObj(this.listItem[this.currentIndex])
+        ? this.listItem[this.currentIndex][this.valueKey]
+        : this.listItem[this.currentIndex];
       this.$emit("confirm", this.listItem[this.currentIndex]);
-      this.$emit('change',this.currentIndex);
+      this.$emit("change", this.currentIndex);
     }
   }
 };
@@ -150,7 +153,7 @@ export default {
   @include flex;
   overflow: hidden;
   .mini-picker-input {
-    padding-left: 6px;
+    padding: 6px;
   }
   .mini-picker-bg {
     position: fixed;

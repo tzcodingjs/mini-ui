@@ -1,8 +1,8 @@
 <template>
   <div>
     <mini-picker :list-item="provinceList" @change="provinceChange"></mini-picker>
-    <mini-picker :list-item="cityList" @change="cityChange"></mini-picker>
-    <mini-picker :list-item="countyList"></mini-picker>
+    <mini-picker :list-item="cityList" @change="cityChange" ref="cityList"></mini-picker>
+    <mini-picker :list-item="countyList" ref="countyList"></mini-picker>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      active:true,
       provinceList: [],
       cityList: [],
       countyList: []
@@ -60,11 +61,14 @@ export default {
       let code = this.provinceList[data].code;
       const city = this.getList("city", code.slice(0, 2));
       this.cityList = city;
+      this.$refs.cityList.clearData();
+      this.$refs.countyList.clearData();
     },
     cityChange(data) {
       let code = this.cityList[data].code;
       const county = this.getList("county", code.slice(0, 4));
       this.countyList = county.length>0?county:['空']
+      this.$refs.countyList.clearData();
     }
   }
 };
