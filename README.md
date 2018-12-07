@@ -1,21 +1,15 @@
 # mini-ui
 
-> Some components ui for Vue.js project
+> 专为mini-shop打造的一款UI组件
 
-## Build Setup
+## 介绍
+原mini-shop项目为微信小程序项目，又苦于网上找不到简单易用（“简陋”）的ui组件，所以只好自立更生！
 
-``` bash
-# install dependencies
-npm install
+## 组件内容
+Picker 数量选择
 
-# serve with hot reload at localhost:8080
-npm run dev
+Address 地址管理(开发中……)
 
-# build for production with minification
-npm run build
+## 安装
+……
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

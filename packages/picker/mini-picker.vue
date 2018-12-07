@@ -5,13 +5,13 @@
     </div>
     <div class="mini-picker-bg" v-show="show" @click.stop="hidePicker"></div>
     <div class="mini-picker-con" v-show="show">
-      <!-- 按钮 -->
+      <!-- confirm && cancel button -->
       <div class="mini-picker-btn">
         <span class="mini-picker-cancel" @click.stop="cancel">取消</span>
         <span class="mini-picker-confirm" @click.stop="confirm">确定</span>
       </div>
 
-      <!-- picker条目 -->
+      <!-- picker list -->
       <div
         class="mini-picker-item"
         @touchstart="onTouchStart"
@@ -22,11 +22,12 @@
         <div class="selectBox"></div>
         <ul :style="animate">
           <li
-            v-for="(item,index) in num"
+            v-for="(item,index) in listItem"
+            v-html="getText(item)"
             :key="index"
             :style="height"
             :class="{selected:index === currentIndex}"
-          >{{ item }}</li>
+          />
         </ul>
       </div>
     </div>
@@ -34,10 +35,15 @@
 </template>
 
 <script>
+import { isObj } from '../utils/index.js'
 export default {
   name: "MiniPicker",
   props: {
-    num: {
+    valueKey:{
+      type:String,
+      default:'name'
+    },
+    listItem: {
       type: Array,
       default: () => {
         return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -60,7 +66,7 @@ export default {
     return {
       show: false,
       startY: 0,
-      step:0,
+      step: 0,
       stepY: 0,
       baseY: 0,
       initNum: 1,
@@ -70,7 +76,7 @@ export default {
   },
   computed: {
     count() {
-      return this.num.length;
+      return this.listItem.length;
     },
     fontColor() {
       return {
@@ -99,16 +105,20 @@ export default {
       this.stepY = this.step;
     },
     onTouchEnd(e) {
+      let totalHeight = (this.count - 1) * -this.itemHeight;
       if (this.baseY == (this.baseY += this.stepY)) {
         return false;
       }
       if (this.baseY > 0) {
         this.baseY = 0;
-      }else if(this.baseY < (this.count - 1) * -this.itemHeight){
-        this.baseY = (this.count - 1) * -this.itemHeight;
+      } else if (this.baseY < totalHeight) {
+        this.baseY = totalHeight;
       }
       this.currentIndex = Math.abs(this.baseY / this.itemHeight);
       this.stepY = 0;
+    },
+    getText(item){
+      return isObj(item) && this.valueKey in item?item[this.valueKey]:item;
     },
     HandleTogglePicker() {
       this.show = true;
@@ -122,8 +132,11 @@ export default {
     },
     confirm() {
       this.show = false;
-      this.initNum = this.num[this.currentIndex];
-      this.$emit("confirm", this.num[this.currentIndex]);
+      this.initNum = isObj(this.listItem[this.currentIndex])
+      ? this.listItem[this.currentIndex][this.valueKey]
+      : this.listItem[this.currentIndex];
+      this.$emit("confirm", this.listItem[this.currentIndex]);
+      this.$emit('change',this.currentIndex);
     }
   }
 };
@@ -131,7 +144,6 @@ export default {
 <style lang='scss'>
 @import "../theme/layout.scss";
 .mini-picker {
-  width: 80px;
   height: 30px;
   line-height: 30px;
   -webkit-text-size-adjust: 100%;

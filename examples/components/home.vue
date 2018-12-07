@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mini-picker></mini-picker>
+    <mini-address></mini-address>
   </div>
 </template>
 
@@ -8,7 +8,9 @@
 export default {
   name: 'Home',
   data () {
-    return {}
+    return {
+
+    }
   }
 }
 </script>
