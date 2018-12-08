@@ -1,8 +1,8 @@
 {
-  "name": "mini-ui",
-  "version": "1.0.0",
+  "name": "only-ui",
+  "version": "1.0.1",
   "description": "专为mini-shop打造的一款UI组件",
-  "author": "tzweb <821189067@qq.com>",
+  "author": "tzcodejs",
   "main":"packages/index.js",
   "private": false,
   "license": "MIT",

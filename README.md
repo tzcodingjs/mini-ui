@@ -1,4 +1,4 @@
-# mini-ui
+# only-ui
 
 > 专为mini-shop打造的一款UI组件
 
@@ -12,6 +12,6 @@ Address 地址选择器(基于Picker开发)
 
 ## 安装
 ```
-npm install mini-shop --save
+npm install only-ui --save
 ```
 

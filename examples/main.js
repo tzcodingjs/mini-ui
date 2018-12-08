@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 
 // 引入组件
-import MiniUi from '../packages/index.js'
-Vue.use(MiniUi)
+import miniUi from '../packages/index.js'
+Vue.use(miniUi)
 
 Vue.config.productionTip = false
 
