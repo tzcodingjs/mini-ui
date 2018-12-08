@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "专为mini-shop打造的一款UI组件",
   "author": "tzweb <821189067@qq.com>",
+  "main":"packages/index.js",
   "private": false,
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tzcodejs/mini-ui"
   },
   "dependencies": {
     "vue": "^2.5.2",

@@ -8,8 +8,10 @@
 ## 组件内容
 Picker 数量选择
 
-Address 地址管理(开发中……)
+Address 地址选择器(基于Picker开发)
 
 ## 安装
-……
+```
+npm install mini-shop --save
+```
 
