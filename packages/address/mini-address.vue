@@ -1,8 +1,8 @@
 <template>
   <div>
-    <mini-picker :list-item="provinceList" @change="provinceChange"></mini-picker>
-    <mini-picker :list-item="cityList" @change="cityChange" ref="cityList"></mini-picker>
-    <mini-picker :list-item="countyList" ref="countyList"></mini-picker>
+    <mini-picker :list-item="provinceList" @confirm="provinceConfirm"></mini-picker>
+    <mini-picker :list-item="cityList" @confirm="cityConfirm" ref="cityList"></mini-picker>
+    <mini-picker :list-item="countyList" @confirm="countyConfirm" ref="countyList"></mini-picker>
   </div>
 </template>
 
@@ -27,10 +27,12 @@ export default {
   },
   data() {
     return {
-      active:true,
+      active: true,
       provinceList: [],
       cityList: [],
-      countyList: []
+      countyList: [],
+      provinceName:'',
+      cityName:'',
     };
   },
   mounted() {
@@ -49,7 +51,7 @@ export default {
       }));
 
       if (code) {
-        result = result.filter(item => item.code.indexOf(code) === 0)
+        result = result.filter(item => item.code.indexOf(code) === 0);
       }
 
       return result;
@@ -57,19 +59,29 @@ export default {
     setValues() {
       this.provinceList = this.getList("province");
     },
-    provinceChange(data) {
-      let code = this.provinceList[data].code;
+    provinceConfirm(index,data) {
+      let code = this.provinceList[index].code;
+      this.provinceName = data;
       const city = this.getList("city", code.slice(0, 2));
       this.cityList = city;
       this.$refs.cityList.clearData();
       this.$refs.countyList.clearData();
     },
-    cityChange(data) {
-      let code = this.cityList[data].code;
+    cityConfirm(index,data) {
+      let code = this.cityList[index].code;
+      this.cityName = data;
       const county = this.getList("county", code.slice(0, 4));
-      this.countyList = county.length>0?county:['空']
+      this.countyList = county.length > 0 ? county : ["空"];
       this.$refs.countyList.clearData();
-    }
+    },
+    countyConfirm(index,data){
+      let area = {
+        province:this.provinceName,
+        city:this.cityName,
+        county:data
+      }
+      this.$emit('getValues',area)
+    },
   }
 };
 </script>

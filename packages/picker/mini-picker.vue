@@ -138,8 +138,7 @@ export default {
       this.initText = isObj(this.listItem[this.currentIndex])
         ? this.listItem[this.currentIndex][this.valueKey]
         : this.listItem[this.currentIndex];
-      this.$emit("confirm", this.listItem[this.currentIndex]);
-      this.$emit("change", this.currentIndex);
+      this.$emit("confirm", this.currentIndex,this.listItem[this.currentIndex]);
     }
   }
 };
@@ -154,6 +153,7 @@ export default {
   overflow: hidden;
   .mini-picker-input {
     padding: 6px;
+    box-sizing:border-box;
   }
   .mini-picker-bg {
     position: fixed;
@@ -189,10 +189,10 @@ export default {
       text-align: center;
       color: #a8a8a8;
       overflow: hidden;
-      transform: translate(0, 76px);
+      padding-top:76px;
       .selectBox {
         position: absolute;
-        top: 10px;
+        top:86px;
         left: 50%;
         margin-left: -30px;
         width: 60px;
