@@ -18,8 +18,9 @@
         @touchmove.prevent="onTouchMove"
         @touchend="onTouchEnd"
         @touchcancel="onTouchEnd"
+        :style="conHeight"
       >
-        <div class="selectBox"></div>
+        <div class="selectBox" :style="height"></div>
         <ul :style="animate">
           <li
             v-for="(item,index) in listItem"
@@ -57,9 +58,13 @@ export default {
       type: Number,
       default: 0
     },
-    Color: {
+    fontColor: {
       type: String,
       default: "#333"
+    },
+     itemHeight:{
+      type:Number,
+      default:76
     }
   },
   data() {
@@ -70,18 +75,12 @@ export default {
       stepY: 0,
       baseY: 0,
       initText: null,
-      itemHeight: 76,
       currentIndex: this.defaultIndex
     };
   },
   computed: {
     count() {
       return this.listItem.length;
-    },
-    fontColor() {
-      return {
-        color: `${this.Color}`
-      };
     },
     animate() {
       return {
@@ -91,8 +90,15 @@ export default {
     },
     height() {
       return {
-        height: `${this.itemHeight}px`
+        height: `${this.itemHeight}px`,
+        top:`${this.itemHeight}px`
       };
+    },
+    conHeight(){
+      return {
+        paddingTop:`${this.itemHeight}px`,
+        height:`${this.itemHeight * 3}px`
+      }
     }
   },
   methods: {
@@ -158,8 +164,10 @@ export default {
   .mini-picker-bg {
     position: fixed;
     top: 0;
-    width: 100vw;
-    height: 100vh;
+    left:0;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
     background: rgba(0, 0, 0, 0.3);
     z-index: 1991 - 1;
   }
@@ -167,14 +175,15 @@ export default {
     @include flex;
     flex-wrap: nowrap;
     position: fixed;
+    left:0;
     bottom: 0;
     width: 100%;
-    height: 300px;
     background: #fff;
     overflow: hidden;
     z-index: 1991;
     .mini-picker-btn {
       @include flex(row);
+      height:30px;
       padding: 20px 30px;
       justify-content: space-between;
       .mini-picker-cancel {
@@ -189,14 +198,14 @@ export default {
       text-align: center;
       color: #a8a8a8;
       overflow: hidden;
-      padding-top:76px;
+      box-sizing: border-box;
       .selectBox {
         position: absolute;
-        top:86px;
+        top:76px;
         left: 50%;
         margin-left: -30px;
         width: 60px;
-        height: 56px;
+        height:76px;
         border-top: 2px solid #1aad19;
         border-bottom: 2px solid #1aad19;
       }

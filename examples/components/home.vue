@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mini-picker :listItem="listItem"></mini-picker>
+    <mini-picker :listItem="listItem" :itemHeight="152"></mini-picker>
     <mini-address @getValues="getValues"></mini-address>
   </div>
 </template>
