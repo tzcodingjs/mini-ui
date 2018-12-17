@@ -58,7 +58,7 @@ export default {
       type: Number,
       default: 0
     },
-    fontColor: {
+    color: {
       type: String,
       default: "#333"
     },
@@ -99,6 +99,11 @@ export default {
         paddingTop:`${this.itemHeight}px`,
         height:`${this.itemHeight * 3}px`
       }
+    },
+    fontColor(){
+      return {
+        color:`${this.color}`
+        }
     }
   },
   methods: {
