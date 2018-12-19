@@ -2,6 +2,10 @@
 
 > 专为mini-shop打造的一款UI组件
 
+[![npm version](https://badge.fury.io/js/only-ui.svg)](https://badge.fury.io/js/only-ui)
+![](https://img.shields.io/github/license/Tzcodejs/mini-shop.svg)
+
+
 ## 介绍
 原mini-shop项目为微信小程序项目，又苦于网上找不到简单易用（“简陋”）的ui组件，所以只好自立更生！
 

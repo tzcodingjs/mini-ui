@@ -1,6 +1,6 @@
 {
   "name": "only-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "专为mini-shop打造的一款UI组件",
   "author": "tzcodejs",
   "main":"packages/index.js",
